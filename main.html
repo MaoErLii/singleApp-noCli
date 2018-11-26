@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据双向绑定</title>
+    <style type="text/css">
+        *{}
+        .module input{
+            margin: 10px auto;
+            width: 80%;
+            height: 20px;
+        }
+        .display{
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    // 监听浏览器窗口大小
+    var defaultWidth = window.innerWidth;
+    var defaultHeight = window.innerHeight;
+    console.log('default size: ' + defaultWidth + '*' + defaultHeight);
+    // 点击改变默认浏览器窗口大小
+    var dc = document
+    dc.onclick = () => {
+        console.log(window.innerWidth + '*' + window.innerHeight);
+        console.log('default size: ' + defaultWidth + '*' + defaultHeight);
+        if (defaultWidth !== window.innerWidth || defaultHeight !== window.innerHeight) {
+            defaultWidth = window.innerWidth;
+            defaultHeight = window.innerHeight;
+            console.log('change default size: ' + defaultWidth + '*' + defaultHeight);
+        }
+    }
+    // 监听window
+    window.onresize = () => {
+        console.log(window.innerWidth + '*' + window.innerHeight)
+        defaultWidth = window.innerWidth;
+        defaultHeight = window.innerHeight;
+        console.log('change default size: ' + defaultWidth + '*' + defaultHeight);
+        // if (defaultWidth)
+    }
+    // 练习
+    var checkList = [{'no': 1, 'checked': false}, {'no': 2, 'checked': false}, {'no': 3, 'checked': false}, {'no': 4, 'checked': false} ]
+    var practice = {
+        plus: 1,
+        func: function () {
+            return this.plus + 1
+        }
+    }
+    var num = 123;
+    var sum = 0;
+    console.log('Hello World');
+    var listCopy = Object.create(practice);
+    listCopy.plus = 10;
+    console.log(listCopy);
+    console.log('查看checkList的原型', checkList.__proto__);
+    console.log(practice.func());
+    console.log(listCopy.func());
+    console.log('checkList的变量类型', typeof(checkList));
+    console.log('num的变量类型', typeof(num));
+    function clickEvent() {
+        // var sum = 0;
+        for (var i in arguments) {
+            sum += arguments[i];
+        }
+        console.log('欧罗巴！！！！', sum);
+        return false;
+    }
+    // 词法作用域
+    function init(name){
+        var name = "Mozilla"; // name is a local variable created by init
+        function displayName() { // displayName() is the inner function, a closure
+            console.log(name); // displayName() uses variable declared in the parent function
+        }
+        displayName();
+    }
+    console.log(typeof (init));
+    init('quin');
+
+    // 动态渲染改变div内容
+    // 监听input事件
+    var data = {'input': ''}
+    function listenInput(e) {
+        console.log('input监听', e);
+        data.input = e.target.value;
+        console.log('输入的内容是:', data.input);
+        displayData();
+    }
+    // 将input的数据反应在dom上
+    function displayData() {
+        if (data.input !== '') {
+            console.log('应该展示的内容是', data.input);
+            document.getElementsByClassName('display')[0].innerHTML = data.input;
+            console.log(document.getElementsByClassName('display')[0].innerHTML);
+        } else {
+            document.getElementsByClassName('display')[0].innerHTML = '只有红茶可以吗？';
+        }
+    }
+</script>
+    <div class="demo">
+        <!--<p>喂？zaima</p>-->
+        <p onclick="clickEvent()" onmouseenter="clickEvent(1, 2, 3)">喂？zaima</p>
+        <p>不在，cnm</p>
+        <form>
+            你想要哪个啊？（意义不明）<br>
+            <label><input type="checkbox" name="check"/>神盾</label><br>
+            <label><input type="checkbox" name="check"/>大公</label><br>
+            <label><input type="checkbox" name="check"/>暗天</label><br>
+            <label><input type="checkbox" name="check"/>小孩才做选择，我全都要</label>
+        </form>
+        <button type="submit">提交</button>
+    </div>
+    <div class="module">
+        <input class="test" placeholder="请输入要填写的内容" type="text" oninput="listenInput(event)">
+        <div class="display">只有红茶可以吗？</div>
+    </div>
+</body>
+</html>

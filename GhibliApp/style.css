@@ -1,0 +1,38 @@
+#root {
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background: dimgray;*/
+}
+
+img{
+    display: block;
+    margin: 0 auto;
+    /*width: 100%;*/
+    /*align-items: center;*/
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card{
+    margin: 1rem;
+    padding: 0 1rem;
+    border: 1px solid gray;
+}
+.card h1{
+  text-align: center;
+}
+
+@media screen and (min-width: 600px) {
+    .card{
+        flex: 1 1 calc(50% - 4rem);
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .card{
+        flex: 1 1 calc(33% - 4rem);
+    }
+}
