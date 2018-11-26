@@ -1,0 +1,2 @@
+# singleApp-noCli
+learning project
